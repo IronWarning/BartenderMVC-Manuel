@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+<section class="page-heading">
+  <p class="eyebrow">PATRON VIEW</p>
+  <h1>Cocktail Menu</h1>
+  <p>Choose a drink and send it directly to the bar.</p>
+</section>
+
+<% if (success) { %><div class="notice success" role="status">Your order was added to the bartender queue.</div><% } %>
+<% if (error) { %><div class="notice error" role="alert"><%= error %></div><% } %>
+
+<div class="menu-layout">
+  <section class="cocktail-grid" aria-label="Available cocktails">
+    <% cocktails.forEach((cocktail) => { %>
+      <article class="cocktail-card">
+        <div class="card-top"><span>HOUSE MENU</span><strong>$<%= cocktail.price.toFixed(2) %></strong></div>
+        <h2><%= cocktail.name %></h2>
+        <p><%= cocktail.description %></p>
+        <small><%= cocktail.ingredients %></small>
+      </article>
+    <% }) %>
+  </section>
+
+  <aside class="order-panel">
+    <p class="eyebrow">PLACE AN ORDER</p>
+    <form action="/orders" method="post">
+      <label for="customerName">Your name</label>
+      <input id="customerName" name="customerName" maxlength="60" value="<%= form.customerName || '' %>" required>
+
+      <label for="cocktailId">Cocktail</label>
+      <select id="cocktailId" name="cocktailId" required>
+        <option value="">Select a cocktail</option>
+        <% cocktails.forEach((cocktail) => { %>
+          <option value="<%= cocktail.id %>" <%= String(form.cocktailId) === String(cocktail.id) ? 'selected' : '' %>><%= cocktail.name %> — $<%= cocktail.price.toFixed(2) %></option>
+        <% }) %>
+      </select>
+
+      <label for="quantity">Quantity</label>
+      <input id="quantity" name="quantity" type="number" min="1" max="10" value="<%= form.quantity || 1 %>" required>
+
+      <label for="notes">Special instructions <span>(optional)</span></label>
+      <textarea id="notes" name="notes" maxlength="250" placeholder="No salt, light ice…"><%= form.notes || '' %></textarea>
+      <button class="button primary full" type="submit">Send order to bar</button>
+    </form>
+  </aside>
+</div>
+<%- include('partials/footer') %>

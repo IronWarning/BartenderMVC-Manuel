@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+<section class="page-heading"><p class="eyebrow">UPDATE ORDER</p><h1>Edit Order #<%= order.id %></h1><p>Adjust the drink, quantity, or preparation notes.</p></section>
+<% if (error) { %><div class="notice error" role="alert"><%= error %></div><% } %>
+<section class="form-card">
+  <form action="/orders/<%= order.id %>/edit" method="post">
+    <label for="cocktailId">Cocktail</label>
+    <select id="cocktailId" name="cocktailId" required>
+      <% cocktails.forEach((cocktail) => { %><option value="<%= cocktail.id %>" <%= String(order.cocktail_id) === String(cocktail.id) ? 'selected' : '' %>><%= cocktail.name %></option><% }) %>
+    </select>
+    <label for="quantity">Quantity</label>
+    <input id="quantity" name="quantity" type="number" min="1" max="10" value="<%= order.quantity %>" required>
+    <label for="notes">Special instructions</label>
+    <textarea id="notes" name="notes" maxlength="250"><%= order.notes %></textarea>
+    <div class="form-actions"><button class="button primary" type="submit">Save changes</button><a class="button secondary" href="/orders">Cancel</a></div>
+  </form>
+</section>
+<%- include('../partials/footer') %>

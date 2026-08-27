@@ -1,0 +1,18 @@
+{
+  "name": "bartender-mvc",
+  "version": "1.0.0",
+  "description": "MVC cocktail ordering and bartender queue application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=22.5"
+  }
+}
